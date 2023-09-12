@@ -1,3 +1,4 @@
+[![Open in Codespaces](https://classroom.github.com/assets/launch-codespace-7f7980b617ed060a017424585567c406b6ee15c891e84e1186181d67ecf80aa0.svg)](https://classroom.github.com/open-in-codespaces?assignment_repo_id=11824148)
  Web Lab - Spring MVC
  ====================
 In this lab, we will explore how to develop and test a web service using the Spring MVC framework. We will create a concert management application , where users can add new concert, delete it and list them all. We will cover the development of the controller and template views.
