@@ -19,45 +19,48 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class ConcertController {
-    // TODO: create hashmap of concerts for storing data
 
-    //TODO: add initbinder to convert date
+    private static HashMap<Integer, Concert> concertMap = new HashMap<>();
+    private static int nextId = 1;
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
 
     @GetMapping("/concerts")
     public String listConcerts(Model model) {
-        // TODO: add concerts to model
-        // TODO: return a template to list concerts
-        return "";
+        List<Concert> concerts = new ArrayList<>(concertMap.values());
+        model.addAttribute("concerts", concerts);
+        return "list-concert";
     }
 
     @GetMapping("/add-concert")
     public String addAConcertForm(Model model) {
-        // TODO: pass blank concert to a form
-        // TODO: return a template for concert form
-        return "";
+        Concert concert = new Concert();
+        model.addAttribute("concert", concert);
+        return "add-concert-form";
     }
 
     @PostMapping("/concerts")
     public String saveConcert(@ModelAttribute Concert concert) {
-        // TODO: add concert to list of concerts
-        // TODO: increment nextId
-        // TODO: redirect to list concerts
-        return "";
+        concert.setId(nextId);
+        nextId++;
+        concertMap.put(concert.getId(), concert);
+        return "redirect:/concerts";
     }
 
     @GetMapping("/delete-concert/{id}")
     public String deleteConcert(@PathVariable int id) {
-        // TODO: remove concert from list of concerts
-        // TODO: redirect to list concerts
-        return "";
+        concertMap.remove(id);
+        return "redirect:/concerts";
     }
 
-    
     @GetMapping("/delete-concert")
     public String removeAllConcerts() {
-        //TODO: clear all employees and reset id
-        // TODO: redirect to list concerts
-        return "";
+        concertMap.clear();
+        nextId = 1;
+        return "redirect:/concerts";
     }
-
 }
